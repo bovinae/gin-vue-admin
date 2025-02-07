@@ -12,5 +12,5 @@ type DeviceConfig struct {
 }
 
 func (d *DeviceConfig) TableName() string {
-	return "device_config"
+	return "config"
 }
