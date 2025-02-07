@@ -83,7 +83,7 @@ hua-wei-obs:
     access-key: you-access-key
     secret-key: you-secret-key
 jwt:
-    signing-key: d1dc93ad-cd87-48ce-982f-321f73ce6cae
+    signing-key: cde29bae-b269-4f2d-bba1-33843b22ef48
     expires-time: 7d
     buffer-time: 1d
     issuer: qmPlus
@@ -134,7 +134,7 @@ mysql:
     db-name: sdy
     username: root
     password: "123"
-    path: 192.168.3.49
+    path: 192.168.3.39
     engine: ""
     log-mode: error
     max-idle-conns: 10
@@ -230,7 +230,7 @@ tencent-cos:
     base-url: https://gin.vue.admin
     path-prefix: github.com/flipped-aurora/gin-vue-admin/server
 zap:
-    level: debug
+    level: info
     prefix: '[github.com/flipped-aurora/gin-vue-admin/server]'
     format: console
     director: log
