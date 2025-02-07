@@ -5,9 +5,9 @@ import (
 
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/business"
+	businessRes "github.com/flipped-aurora/gin-vue-admin/server/model/business/response"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/common/response"
-	"github.com/flipped-aurora/gin-vue-admin/server/utils"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -82,10 +82,16 @@ func (e *DeviceApi) GetDeviceConfigList(c *gin.Context) {
 		response.FailWithMessage(err.Error(), c)
 		return
 	}
-	err = utils.Verify(pageInfo, utils.PageInfoVerify)
-	if err != nil {
-		response.FailWithMessage(err.Error(), c)
-		return
+	// err = utils.Verify(pageInfo, utils.PageInfoVerify)
+	// if err != nil {
+	// 	response.FailWithMessage(err.Error(), c)
+	// 	return
+	// }
+	if pageInfo.Page == 0 {
+		pageInfo.Page = 1
+	}
+	if pageInfo.PageSize == 0 {
+		pageInfo.PageSize = 100
 	}
 	deviceList, total, err := deviceService.GetDeviceConfigList(pageInfo)
 	if err != nil {
@@ -93,8 +99,21 @@ func (e *DeviceApi) GetDeviceConfigList(c *gin.Context) {
 		response.FailWithMessage("获取失败"+err.Error(), c)
 		return
 	}
+	var deviceResList []businessRes.DeviceConfig
+	for _, device := range deviceList.([]business.DeviceConfig) {
+		deviceResList = append(deviceResList, businessRes.DeviceConfig{
+			ID:         device.ID,
+			Camera:     device.Camera,
+			EncryptBox: device.EncryptBox,
+			DecryptBox: device.DecryptBox,
+			Proto:      device.Proto,
+			Port:       device.Port,
+			ModifyTime: time.Unix(device.ModifyTime, 0).Format("2006-01-02 15:04:05"),
+			CreateTime: time.Unix(device.CreateTime, 0).Format("2006-01-02 15:04:05"),
+		})
+	}
 	response.OkWithDetailed(response.PageResult{
-		List:     deviceList,
+		List:     deviceResList,
 		Total:    total,
 		Page:     pageInfo.Page,
 		PageSize: pageInfo.PageSize,

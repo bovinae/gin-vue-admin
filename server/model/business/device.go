@@ -10,3 +10,7 @@ type DeviceConfig struct {
 	ModifyTime int64  `json:"modifyTime" form:"modifyTime" gorm:"comment:修改时间"`
 	CreateTime int64  `json:"createTime" form:"createTime" gorm:"comment:创建时间"`
 }
+
+func (d *DeviceConfig) TableName() string {
+	return "device_config"
+}

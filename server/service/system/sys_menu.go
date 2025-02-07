@@ -2,11 +2,12 @@ package system
 
 import (
 	"errors"
+	"strconv"
+
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/system"
 	"gorm.io/gorm"
-	"strconv"
 )
 
 //@author: [piexlmax](https://github.com/piexlmax)
@@ -26,7 +27,7 @@ func (menuService *MenuService) getMenuTreeMap(authorityId uint) (treeMap map[ui
 	treeMap = make(map[uint][]system.SysMenu)
 
 	var SysAuthorityMenus []system.SysAuthorityMenu
-	err = global.GVA_DB.Where("sys_authority_authority_id = ?", authorityId).Find(&SysAuthorityMenus).Error
+	err = global.GVA_DB.Debug().Where("sys_authority_authority_id = ?", authorityId).Find(&SysAuthorityMenus).Error
 	if err != nil {
 		return
 	}
@@ -37,7 +38,7 @@ func (menuService *MenuService) getMenuTreeMap(authorityId uint) (treeMap map[ui
 		MenuIds = append(MenuIds, SysAuthorityMenus[i].MenuId)
 	}
 
-	err = global.GVA_DB.Where("id in (?)", MenuIds).Order("sort").Preload("Parameters").Find(&baseMenu).Error
+	err = global.GVA_DB.Debug().Where("id in (?)", MenuIds).Order("sort").Preload("Parameters").Find(&baseMenu).Error
 	if err != nil {
 		return
 	}
@@ -51,7 +52,7 @@ func (menuService *MenuService) getMenuTreeMap(authorityId uint) (treeMap map[ui
 		})
 	}
 
-	err = global.GVA_DB.Where("authority_id = ?", authorityId).Preload("SysBaseMenuBtn").Find(&btns).Error
+	err = global.GVA_DB.Debug().Where("authority_id = ?", authorityId).Preload("SysBaseMenuBtn").Find(&btns).Error
 	if err != nil {
 		return
 	}
