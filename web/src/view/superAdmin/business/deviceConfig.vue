@@ -4,11 +4,13 @@
         <el-table-column prop="id" label="ID" width="80"></el-table-column>
         <el-table-column prop="camera" label="摄像头IP端口" width="180"></el-table-column>
         <el-table-column prop="encryptBox" label="加密盒子IP" width="150"></el-table-column>
+        <el-table-column prop="enableEncryptBox" label="启用加密盒子" width="150"></el-table-column>
         <el-table-column prop="decryptBox" label="解密盒子IP" width="150"></el-table-column>
-        <el-table-column prop="proto" label="协议" width="120"></el-table-column>
-        <el-table-column prop="port" label="端口" width="100"></el-table-column>
-        <el-table-column prop="modifyTime" label="修改时间" width="120"></el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="120"></el-table-column>
+        <el-table-column prop="enableDecryptBox" label="启用解密盒子" width="150"></el-table-column>
+        <el-table-column prop="tcpPort" label="tcp端口" width="120"></el-table-column>
+        <el-table-column prop="udpPort" label="udp端口" width="100"></el-table-column>
+        <el-table-column prop="modifyTime" label="修改时间" width="180"></el-table-column>
+        <el-table-column prop="createTime" label="创建时间" width="180"></el-table-column>
       </el-table>
     </div>
   </template>

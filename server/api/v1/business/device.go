@@ -102,14 +102,16 @@ func (e *DeviceApi) GetDeviceConfigList(c *gin.Context) {
 	var deviceResList []businessRes.DeviceConfig
 	for _, device := range deviceList.([]business.DeviceConfig) {
 		deviceResList = append(deviceResList, businessRes.DeviceConfig{
-			ID:         device.ID,
-			Camera:     device.Camera,
-			EncryptBox: device.EncryptBox,
-			DecryptBox: device.DecryptBox,
-			Proto:      device.Proto,
-			Port:       device.Port,
-			ModifyTime: time.Unix(device.ModifyTime, 0).Format("2006-01-02 15:04:05"),
-			CreateTime: time.Unix(device.CreateTime, 0).Format("2006-01-02 15:04:05"),
+			ID:               device.ID,
+			Camera:           device.Camera,
+			EncryptBox:       device.EncryptBox,
+			EnableEncryptBox: device.EnableEncryptBox,
+			DecryptBox:       device.DecryptBox,
+			EnableDecryptBox: device.EnableDecryptBox,
+			TcpPort:          device.TcpPort,
+			UdpPort:          device.UdpPort,
+			ModifyTime:       time.Unix(device.ModifyTime, 0).Format("2006-01-02 15:04:05"),
+			CreateTime:       time.Unix(device.CreateTime, 0).Format("2006-01-02 15:04:05"),
 		})
 	}
 	response.OkWithDetailed(response.PageResult{
