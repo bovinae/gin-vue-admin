@@ -66,6 +66,56 @@ func (e *DeviceApi) UpdateDeviceConfig(c *gin.Context) {
 	response.OkWithMessage("更新成功", c)
 }
 
+// DeleteDeviceConfig
+// @Tags      Device
+// @Summary
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body      example.ExaCustomer            true  "客户ID, 客户信息"
+// @Success   200   {object}  response.Response{msg=string}  "更新客户信息"
+// @Router    /device/deviceConfig [delete]
+func (e *DeviceApi) DeleteDeviceConfig(c *gin.Context) {
+	var dc business.DeviceConfig
+	err := c.ShouldBindJSON(&dc)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	err = deviceService.DeleteDeviceConfig(&dc)
+	if err != nil {
+		global.GVA_LOG.Error("删除失败!", zap.Error(err))
+		response.FailWithMessage("删除失败", c)
+		return
+	}
+	response.OkWithMessage("删除成功", c)
+}
+
+// GetDeviceConfig
+// @Tags      Device
+// @Summary   分页获取设备配置列表
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  query     request.PageInfo                                        true  "页码, 每页大小"
+// @Success   200   {object}  response.Response{data=response.PageResult,msg=string}  "分页获取权限客户列表,返回包括列表,总数,页码,每页数量"
+// @Router    /device/deviceConfigList [get]
+func (e *DeviceApi) GetDeviceConfig(c *gin.Context) {
+	var ei request.EntityId
+	err := c.ShouldBindQuery(&ei)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	deviceConfig, err := deviceService.GetDeviceConfig(ei)
+	if err != nil {
+		global.GVA_LOG.Error("获取失败!", zap.Error(err))
+		response.FailWithMessage("获取失败"+err.Error(), c)
+		return
+	}
+	response.OkWithDetailed(deviceConfig, "获取成功", c)
+}
+
 // GetDeviceConfigList
 // @Tags      Device
 // @Summary   分页获取设备配置列表

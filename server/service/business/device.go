@@ -24,12 +24,35 @@ func (s *DeviceService) CreateDeviceConfig(e business.DeviceConfig) (err error) 
 //@author: [bovinae](https://github.com/bovinae)
 //@function: UpdateDeviceConfig
 //@description: 更新设备配置
-//@param: e *model.ExaCustomer
+//@param: e *model.DeviceConfig
 //@return: err error
 
 func (exa *DeviceService) UpdateDeviceConfig(e *business.DeviceConfig) (err error) {
 	err = global.GVA_DB.Save(e).Error
 	return err
+}
+
+//@author: [bovinae](https://github.com/bovinae)
+//@function: DeleteDeviceConfig
+//@description: 删除设备配置
+//@param: e *model.DeviceConfig
+//@return: err error
+
+func (exa *DeviceService) DeleteDeviceConfig(e *business.DeviceConfig) (err error) {
+	err = global.GVA_DB.Delete(e).Error
+	return err
+}
+
+//@author: [bovinae](https://github.com/bovinae)
+//@function: GetDeviceConfig
+//@description: 获取设备配置
+//@param: info request.PageInfo
+//@return: list interface{}, total int64, err error
+
+func (exa *DeviceService) GetDeviceConfig(id request.EntityId) (dc *business.DeviceConfig, err error) {
+	dc = &business.DeviceConfig{}
+	err = global.GVA_DB.Where("id=?", id.ID).Find(dc).Error
+	return dc, err
 }
 
 //@author: [bovinae](https://github.com/bovinae)

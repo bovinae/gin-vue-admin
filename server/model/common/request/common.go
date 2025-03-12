@@ -46,3 +46,7 @@ type GetAuthorityId struct {
 }
 
 type Empty struct{}
+
+type EntityId struct {
+	ID int `json:"id" form:"id"`
+}

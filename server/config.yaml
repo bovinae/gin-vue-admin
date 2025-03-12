@@ -134,7 +134,7 @@ mysql:
     db-name: sdy
     username: root
     password: "123"
-    path: 192.168.3.39
+    path: 192.168.1.39
     engine: ""
     log-mode: error
     max-idle-conns: 10

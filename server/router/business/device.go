@@ -13,8 +13,10 @@ func (e *DeviceRouter) InitDeviceRouter(Router *gin.RouterGroup) {
 	{
 		deviceRouter.POST("deviceConfig", deviceApi.CreateDeviceConfig)
 		deviceRouter.PUT("deviceConfig", deviceApi.UpdateDeviceConfig)
+		deviceRouter.DELETE("deviceConfig", deviceApi.DeleteDeviceConfig)
 	}
 	{
+		deviceRouterWithoutRecord.GET("deviceConfig", deviceApi.GetDeviceConfig)
 		deviceRouterWithoutRecord.GET("deviceConfigList", deviceApi.GetDeviceConfigList)
 	}
 }
