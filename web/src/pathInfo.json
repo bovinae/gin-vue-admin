@@ -41,6 +41,8 @@
   "/src/view/superAdmin/authority/components/datas.vue": "Datas",
   "/src/view/superAdmin/authority/components/menus.vue": "Menus",
   "/src/view/superAdmin/business/deviceConfig.vue": "DeviceConfig",
+  "/src/view/superAdmin/business/historicalVideo.vue": "HistoricalVideo",
+  "/src/view/superAdmin/business/realTimeVideo.vue": "RealTimeVideo",
   "/src/view/superAdmin/dictionary/sysDictionary.vue": "SysDictionary",
   "/src/view/superAdmin/dictionary/sysDictionaryDetail.vue": "SysDictionaryDetail",
   "/src/view/superAdmin/index.vue": "SuperAdmin",

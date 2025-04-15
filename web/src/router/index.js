@@ -15,6 +15,14 @@ const routes = [
     name: 'Login',
     component: () => import('@/view/login/index.vue')
   },
+  // {
+  //   path: '/superAdmin/business/historicalVideo',
+  //   name: 'HistoricalVideo',
+  //   component: () => import('@/view/superAdmin/business/historicalVideo.vue'),
+  //   meta: {
+  //     title: 'Historical Video'
+  //   }
+  // },
   {
     path: '/:catchAll(.*)',
     meta: {
