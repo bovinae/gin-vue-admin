@@ -120,7 +120,12 @@ export default {
     const fetchPcapFiles = async () => {
       loading.value = true
       try {
-        const response = await axios.get('http://192.168.1.39:5000/list_pcaps')
+        const response = await axios.get('http://192.168.1.39:5000/list_pcaps', {
+          params: {
+            page: page.value,
+            pageSize: pageSize.value
+          }
+        })
         if (response.data.code === 0) {
           tableData.value = response.data.data.list
           total.value = response.data.data.total
