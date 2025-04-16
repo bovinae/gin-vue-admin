@@ -140,23 +140,25 @@ export default {
         // First, call the POST interface to start the replay
         const formData = new URLSearchParams()
         formData.append('pcap_file', row.name)
-
+        
         // Send request and wait for response
-        axios.post('http://192.168.1.39:5000/replay', formData, {
+        const replayResponse = await axios.post('http://192.168.1.39:5000/replay', formData, {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         })
 
-        // if (replayResponse.data.code !== 0) {
-        //   throw new Error(replayResponse.data.msg || '启动回放失败')
-        // }
+        if (replayResponse.data.code !== 0) {
+          throw new Error(replayResponse.data.msg || '启动回放失败')
+        }
 
-        // Wait for 5 seconds to ensure the server has processed the replay request
-        await new Promise(resolve => setTimeout(resolve, 5000))
+        // Wait for 60 seconds to ensure the server has processed the replay request
+        await new Promise(resolve => setTimeout(resolve, 60000))
 
-        // Then set the video URL and show the player
-        videoUrl.value = `http://192.168.1.39:5000/playlist.m3u8`
+        // Construct the dynamic playlist URL
+        const fileNameWithoutExtension = row.name.replace(/\.pcap$/, '');
+        videoUrl.value = `http://192.168.1.39:5000/${fileNameWithoutExtension}.m3u8`
+        console.log('Using HLS playlist URL:', videoUrl.value); // Log the URL for debugging
         dialogVisible.value = true
 
         // Initialize hls.js after the dialog is shown and DOM is updated
