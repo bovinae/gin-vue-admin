@@ -158,7 +158,7 @@ export default {
         }
 
         // Wait for 60 seconds to ensure the server has processed the replay request
-        await new Promise(resolve => setTimeout(resolve, 60000))
+        await new Promise(resolve => setTimeout(resolve, 30000))
 
         // Construct the dynamic playlist URL
         const fileNameWithoutExtension = row.name.replace(/\.pcap$/, '');
