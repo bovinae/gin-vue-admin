@@ -171,3 +171,36 @@ func (e *DeviceApi) GetDeviceConfigList(c *gin.Context) {
 		PageSize: pageInfo.PageSize,
 	}, "获取成功", c)
 }
+
+// Play
+// @Tags      Device
+// @Summary
+// @Security  ApiKeyAuth
+// @accept    application/json
+// @Produce   application/json
+// @Param     data  body      business.DeviceConfig
+// @Success   200   {object}  response.Response{msg=string}  "播放"
+// @Router    /device/play [put]
+func (e *DeviceApi) Play(c *gin.Context) {
+	type PlayParam struct {
+		EncryptBox string `json:"encryptBox" form:"encryptBox" gorm:"comment:加密盒子ip"`
+		UdpPort    string `json:"udpPort" form:"udpPort" gorm:"comment:加解密盒子处理的udp端口"`
+	}
+	var pp PlayParam
+	err := c.ShouldBindJSON(&pp)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	dc := &business.DeviceConfig{
+		EncryptBox: pp.EncryptBox,
+		UdpPort:    pp.UdpPort,
+	}
+	err = deviceService.Play(dc)
+	if err != nil {
+		global.GVA_LOG.Error("设置失败!", zap.Error(err))
+		response.FailWithMessage("设置失败", c)
+		return
+	}
+	response.OkWithMessage("设置成功", c)
+}

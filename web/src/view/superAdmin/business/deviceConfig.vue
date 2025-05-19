@@ -16,7 +16,7 @@
           tooltip-effect="dark"
           row-key="ID"
         >
-          <el-table-column type="selection" width="55" />
+          <el-table-column type="selection" width="20" />
           <el-table-column
             align="left"
             label="ID"
@@ -39,7 +39,7 @@
             align="left"
             label="启用加密盒子"
             prop="enableEncryptBox"
-            width="150"
+            width="120"
           />
           <el-table-column
             align="left"
@@ -51,7 +51,7 @@
             align="left"
             label="启用解密盒子"
             prop="enableDecryptBox"
-            width="150"
+            width="120"
           />
           <el-table-column
             align="left"
@@ -77,7 +77,7 @@
             prop="createTime"
             width="180"
           />
-          <el-table-column align="left" label="操作" min-width="160">
+          <el-table-column align="left" label="操作" min-width="200">
             <template #default="scope">
               <el-button
                 type="primary"
@@ -92,6 +92,13 @@
                 icon="delete"
                 @click="deleteDevice(scope.row)"
                 >删除</el-button
+              >
+              <el-button
+                type="primary"
+                link
+                icon="video-camera"
+                @click="handlePlayVideo(scope.row)"
+                >播放</el-button
               >
             </template>
           </el-table-column>
@@ -156,7 +163,8 @@
       updateDeviceConfig,
       deleteDeviceConfig,
       getDeviceConfig,
-      getDeviceConfigList
+      getDeviceConfigList,
+      playVideo
     } from '@/api/deviceConfig'
     import WarningBar from '@/components/warningBar/warningBar.vue'
     import { ref } from 'vue'
@@ -249,6 +257,26 @@
           getTableData()
         }
       })
+    }
+    const handlePlayVideo = async (row) => {
+      if (!row.decryptBox || !row.tcpPort) {
+        ElMessage.error('解密盒子IP或TCP端口未配置');
+        return;
+      }
+
+      // 调用 deviceConfig.js 中的 playVideo 方法
+      await playVideo(row)
+        .then(() => {
+          ElMessage.success('播放设置成功');
+        })
+        .catch((error) => {
+          ElMessage.error('播放设置失败');
+          console.error('播放设置错误:', error);
+        });
+
+      // const rtspUrl = `rtsp://admin:1qa2ws3ed@${row.decryptBox}:${row.tcpPort}/Streaming/Channels/1`;
+      // // 打开视频流
+      // window.open(rtspUrl, '_blank');
     }
     const enterDrawer = async () => {
       let res

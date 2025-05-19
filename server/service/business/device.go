@@ -1,6 +1,10 @@
 package business
 
 import (
+	"context"
+	"fmt"
+	"time"
+
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/business"
 	"github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
@@ -73,4 +77,16 @@ func (exa *DeviceService) GetDeviceConfigList(info request.PageInfo) (list inter
 		err = db.Limit(limit).Offset(offset).Find(&deviceConfigList).Error
 	}
 	return deviceConfigList, total, err
+}
+
+// @author: [bovinae](https://github.com/bovinae)
+// @function: Play
+// @description: 播放
+// @param: e *model.DeviceConfig
+// @return: err error
+func (exa *DeviceService) Play(e *business.DeviceConfig) (err error) {
+	key := "current_play"
+	value := fmt.Sprintf("%s:%s", e.EncryptBox, e.UdpPort)
+	err = global.GVA_REDIS.Set(context.Background(), key, value, 5*time.Minute).Err()
+	return err
 }

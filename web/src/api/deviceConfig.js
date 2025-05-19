@@ -87,3 +87,19 @@ export const getDeviceConfigList = (params) => {
     params
   })
 }
+
+// @Tags SysApi
+// @Summary 播放
+// @Security ApiKeyAuth
+// @accept application/json
+// @Produce application/json
+// @Param data body dbModel.ExaCustomer true "更新客户信息"
+// @Success 200 {string} string "{"success":true,"data":{},"msg":"获取成功"}"
+// @Router /customer/customer [put]
+export const playVideo = (data) => {
+  return service({
+    url: '/device/play',
+    method: 'put',
+    data
+  })
+}

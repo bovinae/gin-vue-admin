@@ -18,5 +18,6 @@ func (e *DeviceRouter) InitDeviceRouter(Router *gin.RouterGroup) {
 	{
 		deviceRouterWithoutRecord.GET("deviceConfig", deviceApi.GetDeviceConfig)
 		deviceRouterWithoutRecord.GET("deviceConfigList", deviceApi.GetDeviceConfigList)
+		deviceRouterWithoutRecord.PUT("play", deviceApi.Play)
 	}
 }
